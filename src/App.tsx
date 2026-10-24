@@ -1,0 +1,91 @@
+import {useState} from "react"
+import {languages} from "./languages"
+import {getRandomWord} from "./utils"
+
+import ConfettiContainer from "./components/ConfettiContainer"
+import Header from './components/Header'
+import GameStatus from "./components/GameStatus";
+import LanguageChips from "./components/LanguageChips";
+import WordLetters from "./components/WordLetters";
+import AriaLiveStatus from "./components/AriaLiveStatus";
+import Keyboard from "./components/Keyboard";
+import NewGameButton from "./components/NewGameButton";
+
+export default function AssemblyEndgame() {
+    const [currentWord, setCurrentWord] = useState<string>(():string => getRandomWord())
+    const [guessedLetters, setGuessedLetters] = useState<string[]>([])
+
+    const maxWrongGuesses:number = languages.length - 1
+    const wrongGuessCount:number =
+        guessedLetters.filter((letter:string):boolean => !currentWord.includes(letter)).length
+    const guessesLeft:number = maxWrongGuesses - wrongGuessCount
+    const isGameWon:boolean =
+        currentWord.split("").every((letter:string):boolean => guessedLetters.includes(letter))
+    const isGameLost:boolean = wrongGuessCount >= maxWrongGuesses
+    const isGameOver:boolean = isGameWon || isGameLost
+    const lastGuessedLetter:string | undefined = guessedLetters[guessedLetters.length - 1]
+    const isLastGuessIncorrect:boolean = Boolean(
+        lastGuessedLetter && !currentWord.includes(lastGuessedLetter)
+    )
+
+    const alphabet = "abcdefghijklmnopqrstuvwxyz"
+
+    function addGuessedLetter(letter:string):void {
+        setGuessedLetters((prevLetters:string[]):string[] =>
+            prevLetters.includes(letter) ?
+                prevLetters :
+                [...prevLetters, letter]
+        )
+    }
+
+    function startNewGame():void {
+        setCurrentWord(getRandomWord())
+        setGuessedLetters([])
+    }
+
+    return (
+        <main>
+            <ConfettiContainer isGameWon={isGameWon}/>
+            <Header maxWrongGuesses={maxWrongGuesses}/>
+
+            <GameStatus
+                isGameWon={isGameWon}
+                isGameLost={isGameLost}
+                isGameOver={isGameOver}
+                isLastGuessIncorrect={isLastGuessIncorrect}
+                wrongGuessCount={wrongGuessCount}
+            />
+
+            <LanguageChips
+                languages={languages}
+                wrongGuessCount={wrongGuessCount}
+            />
+
+            <WordLetters
+                currentWord={currentWord}
+                guessedLetters={guessedLetters}
+                isGameLost={isGameLost}
+            />
+
+            <AriaLiveStatus
+                currentWord={currentWord}
+                lastGuessedLetter={lastGuessedLetter}
+                guessedLetters={guessedLetters}
+                guessesLeft={guessesLeft}
+            />
+
+            <Keyboard
+                alphabet={alphabet}
+                guessedLetters={guessedLetters}
+                currentWord={currentWord}
+                isGameOver={isGameOver}
+                addGuessedLetter={addGuessedLetter}
+            />
+
+            <NewGameButton
+                isGameOver={isGameOver}
+                startNewGame={startNewGame}
+            />
+        </main>
+    )
+}

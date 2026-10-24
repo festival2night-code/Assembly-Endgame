@@ -1,4 +1,4 @@
-export const words = [
+export const words:string[] = [
   "about",
   "account",
   "across",
@@ -136,6 +136,7 @@ export const words = [
   "driving",
   "early",
   "earth",
+  "education",
   "effect",
   "elastic",
   "electric",
@@ -220,6 +221,7 @@ export const words = [
   "knowledge",
   "language",
   "laugh",
+  "learning",
   "leather",
   "letter",
   "level",
@@ -424,6 +426,7 @@ export const words = [
   "system",
   "table",
   "taste",
+  "teaching",
   "tendency",
   "theory",
   "there",

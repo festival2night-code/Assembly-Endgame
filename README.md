@@ -1,6 +1,6 @@
-# Assembly: Endgame
+# Assembly: Endgame (TypeScript)
 
-A word-guessing game built with React and Vite. Guess the hidden word before you run out of attempts and Assembly takes over the programming world.
+A word-guessing game built with React, TypeScript, and Vite. Guess the hidden word before you run out of attempts and Assembly takes over the programming world.
 
 ---
 
@@ -18,9 +18,9 @@ A word-guessing game built with React and Vite. Guess the hidden word before you
 
 ##  Tech Stack
 
-- React 18
-- JavaScript (JSX)
-- Vite 8
+- React 19
+- TypeScript (TSX)
+- Vite 6
 - `@vitejs/plugin-react` (JSX transform + Fast Refresh)
 - `clsx` for conditional CSS classes
 - `react-confetti` for the win celebration
@@ -29,8 +29,6 @@ A word-guessing game built with React and Vite. Guess the hidden word before you
 ---
 
 ##  Getting Started
-
-Requires Node.js 20.19+ or 22.12+.
 
 ### 1. Install Dependencies
 
@@ -53,9 +51,11 @@ Visit http://localhost:5173
 ##  Build for Production
 
 ```bash
-npm run build     # outputs to dist/
+npm run build     # type-checks and outputs to dist/
 npm run preview   # preview the production build locally
 ```
+
+Run `npm run lint` to check the source code.
 
 ---
 
@@ -63,27 +63,38 @@ npm run preview   # preview the production build locally
 
 ```text
 .
-├── App.jsx           # Game state, rendering, and win/loss handling
-├── index.css         # Game layout and styles
-├── index.html        # HTML entry point and page metadata
-├── index.jsx         # React entry point
-├── languages.js      # Programming language status chips
-├── package.json      # Scripts and dependencies
-├── package-lock.json # Locked dependency versions
-├── utils.js          # Random word and farewell message helpers
-├── vite.config.js    # Vite and React plugin configuration
-└── words.js          # Word list used for each round
+├── src/
+│   ├── components/
+│   │   ├── AriaLiveStatus.tsx  # Screen-reader game announcements
+│   │   ├── ConfettiContainer.tsx
+│   │   ├── GameStatus.tsx      # Win, loss, and farewell messages
+│   │   ├── Header.tsx
+│   │   ├── Keyboard.tsx        # Letter selection controls
+│   │   ├── LanguageChips.tsx
+│   │   ├── NewGameButton.tsx
+│   │   └── WordLetters.tsx
+│   ├── App.tsx                 # Game state and game flow
+│   ├── index.css               # Game layout and styles
+│   ├── languages.ts            # Programming language status chips
+│   ├── main.tsx                # React entry point
+│   └── utils.ts                # Random word and farewell helpers
+├── index.html                  # HTML entry point and page metadata
+├── package.json                # Scripts and dependencies
+├── package-lock.json           # Locked dependency versions
+├── tsconfig.app.json
+├── tsconfig.node.json
+└── vite.config.ts              # Vite and React plugin configuration
 ```
 
 ---
 
 ##  What I Learned
 
-- Managing interactive game state with React hooks
+- Managing interactive game state with React hooks and TypeScript
+- Building reusable typed React components
 - Rendering dynamic content from arrays with `map()` and stable keys
-- Passing event handlers and data through component props
 - Supporting screen readers with accessible labels and live status updates
-- Organizing game data and helper functions separately from UI components
+- Separating game data, helper functions, and interface components
 
 ---
 
